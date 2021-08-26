@@ -1,9 +1,10 @@
 import { useSubscription } from "@apollo/client";
+import onCreateRealtimeCursorGql from "../gql/onCreateRealtimeCursorGql";
 import onCreateRealtimeUserGql from "../gql/onCreateRealtimeUserGql";
 
-export const useOnCreateRealtimeGql = (url: string) => {
+export default (url: string) => {
     return useSubscription(
-        onCreateRealtimeUserGql,
+        onCreateRealtimeCursorGql,
         { variables: { url: "URL#" + url } }
     );
 }

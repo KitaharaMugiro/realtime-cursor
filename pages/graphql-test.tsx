@@ -1,16 +1,18 @@
 import { useMutation } from '@apollo/client';
 import type { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import queryRealtimeUserGql from '../api/gql/queryRealtimeUserGql';
-import { useCreateRealtimeUser } from '../api/gqlFunctions/createRealtimeUser';
-import { useQueryRealtimeUser } from "../api/gqlFunctions/listRealtimeUsers";
-import { useOnCreateRealtimeGql } from '../api/gqlFunctions/useOnCreateRealtimeGql';
+import { useCreateRealtimeUser } from '../api/gqlFunctions/useCreateRealtimeUser';
+import { useQueryRealtimeUser } from "../api/gqlFunctions/useQueryRealtimeUsers";
+import { useOnCreateRealtimeUser } from '../api/gqlFunctions/useOnCreateRealtimeUser';
+import { useOnUpdateRealtimeUser } from '../api/gqlFunctions/useOnUpdateRealtimeUser';
 import MyApolloClient from "../api/MyApolloClient";
 import ClientOnly from "../components/ClientOnly";
 import Countries from "../components/countries";
 import User from '../models/User';
 import styles from '../styles/Home.module.css';
+import { useUpdateRealtimeUser } from '../api/gqlFunctions/useUpdateRealtimeUser';
 
 export async function getServerSideProps(context: any) { //typeないの？
     // URL情報は取れる
@@ -22,8 +24,7 @@ export async function getServerSideProps(context: any) { //typeないの？
         query: queryRealtimeUserGql,
         variables: { url: "URL#" + url } //このロジックはどこかに埋めたいなあ
     });
-    console.log(url)
-
+    console.log(data)
     return {
         props: {
             realtimeUser: data.queryRealtimeUser.items,
@@ -35,18 +36,66 @@ export async function getServerSideProps(context: any) { //typeないの？
 
 
 const Home: NextPage = (props: any) => {
+    const [displayUserList, setDisplayUserList] = useState(props.realtimeUser)
     const { realtimeUser, url } = props
-    const [createRealtimeUser, { loading, error }] = useCreateRealtimeUser()
+    const [createRealtimeUser] = useCreateRealtimeUser()
+    const [updateRealtimeUser] = useUpdateRealtimeUser()
     useEffect(() => {
         // TODO: こんなロジックをフロントでもたないといけないわけがない
+        // TODO: variablesの型を渡さないと厳しい
         const user = new User()
         createRealtimeUser({ variables: { url: "URL#" + url, userId: "UserId#" + user.userId, name: user.name, avator: user.avator, updatedAt: user.updatedAt } })
     }, [])
 
-    const { data } = useOnCreateRealtimeGql(url)
-    if (data) {
-        console.log("subscription value come!!!")
-    }
+    useEffect(() => {
+        // 定期的なpoke
+        setInterval(() => {
+            const user = new User()
+            updateRealtimeUser(
+                {
+                    variables:
+                        { url: "URL#" + url, userId: "UserId#" + user.userId, updatedAt: user.updatedAt }
+                }
+            )
+        }, 5000)
+    }, [])
+
+    //Subscription
+    const onCreateRealtimeUserResponse = useOnCreateRealtimeUser(url)
+    const onUpdateRealtimeUserResponse = useOnUpdateRealtimeUser(url)
+
+    useEffect(() => {
+        const createdUser = onCreateRealtimeUserResponse.data?.onCreateRealtimeUser
+        if (!createdUser) {
+            console.warn(onCreateRealtimeUserResponse.data)
+            return
+        }
+        const joined = displayUserList.concat(createdUser);
+        const filtered = joined.filter((element, index, self) =>
+            self.findIndex(e =>
+                e.SK === element.SK
+            ) === index
+        );
+        setDisplayUserList(filtered)
+    }, [onCreateRealtimeUserResponse.data])
+
+
+    useEffect(() => {
+        const updatedUser = onUpdateRealtimeUserResponse.data?.onUpdateRealtimeUser
+        if (!updatedUser) {
+            console.warn(onUpdateRealtimeUserResponse.data)
+            return
+        }
+        const deleteUpdatedUser = displayUserList.filter(d => d.SK !== updatedUser.SK)
+        const joined = deleteUpdatedUser.concat(updatedUser);
+        const filtered = joined.filter((element, index, self) =>
+            self.findIndex(e =>
+                e.SK === element.SK
+            ) === index
+        );
+        setDisplayUserList(filtered)
+    }, [onUpdateRealtimeUserResponse.data])
+
 
     return (
         <div className={styles.container}>
@@ -61,10 +110,10 @@ const Home: NextPage = (props: any) => {
                     Welcome to <a href="https://nextjs.org">Next.js!</a>
                 </h1>
 
-                {data}
+                {JSON.stringify(displayUserList.map(d => d.updatedAt))}
 
                 <ClientOnly>
-                    <Countries realtimeUser={realtimeUser} />
+                    <Countries realtimeUser={displayUserList} />
                 </ClientOnly>
             </main>
         </div>

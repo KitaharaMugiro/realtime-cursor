@@ -5,15 +5,16 @@ interface Props {
     userInfo: { color: string, avatar: string, name: string }
 }
 
-const Cursor = (props: Props) => {
+const CursorAnimate = (props: Props) => {
     const curPos = props.curPos
     const userInfo = props.userInfo
     return (
         <div
             className={styles.cursor}
             style={{
-                left: curPos.x,
-                top: curPos.y,
+                left: 0,
+                top: 0,
+                transform: `translateX(${curPos.x}px) translateY(${curPos.y}px)`,
                 transition: "transform 1s"
             }}
         >
@@ -34,4 +35,4 @@ const Cursor = (props: Props) => {
 
 }
 
-export { Cursor }
+export { CursorAnimate }

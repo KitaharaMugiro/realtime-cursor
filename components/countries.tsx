@@ -1,5 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
-import { useQueryRealtimeUser } from "../api/gqlFunctions/listRealtimeUsers";
+import { useQueryRealtimeUser } from "../api/gqlFunctions/useQueryRealtimeUsers";
 import styles from "../styles/Home.module.css";
 
 interface Props {
