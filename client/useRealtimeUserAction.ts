@@ -33,7 +33,7 @@ export default (callback?: (actionId: string, value: string) => void) => {
     /* pushメソッド定義 */
     const pushUserAction = (actionId: string, value: string) => {
         const user = new User()
-        createUserAction(url, user.userId, actionId, value)
+        createUserAction(url, user.userId, actionId, value, user.name, user.avator, user.color)
     }
 
     /* callbackの実行 */

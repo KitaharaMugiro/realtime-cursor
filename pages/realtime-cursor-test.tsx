@@ -3,30 +3,19 @@ import Head from 'next/head';
 import React, { useEffect, useState } from "react";
 import useCreateRealtimeCursor from '../api/gqlFunctions/useCreateRealtimeCursor';
 import useOnCreateRealtimeCursor from '../api/gqlFunctions/useOnCreateRealtimeCursor';
+import useRealtimeCursor from '../client/useRealtimeCursor';
 import { CursorAnimate } from '../components/CursorAnimate';
 import User from '../models/User';
 import styles from '../styles/Home.module.css';
 
-export async function getServerSideProps(context: any) { //typeないの？
-    // URL情報は取れる
-    const host = context.req.headers.host
-    const path = context.resolvedUrl
-    const url = host + path
-    return {
-        props: {
-            url: url
-        },
-    };
-
-}
 
 
-const Home: NextPage = (props: any) => {
+const Home: NextPage = () => {
+    const { pushRealtimeCursor, cursorList } = useRealtimeCursor()
+
     const [time, setTime] = useState(0)
-    const [displayCursorList, setDisplayCursorList] = useState([])
     const [yourCursorPosition, setYourCursorPosition] = useState({ x: 0, y: 0 })
-    const { url } = props
-    const createRealtimeCursor = useCreateRealtimeCursor()
+
 
     const _onMouseMove = (e) => {
         setYourCursorPosition({ x: e.clientX, y: e.clientY });
@@ -37,41 +26,20 @@ const Home: NextPage = (props: any) => {
             setTime(time + 1);
             if (!yourCursorPosition.x) return
             if (!yourCursorPosition.y) return
-            const user = new User()
-            createRealtimeCursor(url, user.userId, yourCursorPosition.x, yourCursorPosition.y)
+            pushRealtimeCursor(yourCursorPosition.x, yourCursorPosition.y)
         }, 500);
         return () => {
             clearTimeout(timer);
         };
     }, [time]);
 
-
-    //Subscription
-    const createdCursor = useOnCreateRealtimeCursor(url)
-
-    useEffect(() => {
-        if (!createdCursor) {
-            return
-        }
-        const deleteUpdatedUser = displayCursorList.filter(d => d.SK !== createdCursor.SK)
-        const joined = deleteUpdatedUser.concat(createdCursor);
-
-
-        const latestJoined = joined.filter(i => new Date(i.deleteTime) > new Date())
-        const filtered = latestJoined.filter((element, index, self) =>
-            self.findIndex(e =>
-                e.SK === element.SK
-            ) === index
-        );
-
-
-        setDisplayCursorList(filtered)
-    }, [createdCursor])
-
     const renderCursors = () => {
-        return displayCursorList.map(c => {
+        return cursorList.map(c => {
             return (
-                <CursorAnimate key={c.SK} curPos={{ x: c.x, y: c.y }} userInfo={{ name: "tekitou", avatar: "🐴", color: "red" }} />
+                <CursorAnimate
+                    key={c.key}
+                    curPos={{ x: c.x, y: c.y }}
+                    userInfo={{ name: c.name, avatar: c.avator, color: c.color }} />
             )
         })
     }

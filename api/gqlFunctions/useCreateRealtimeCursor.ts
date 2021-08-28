@@ -9,13 +9,13 @@ export default () => {
         createRealtimeCursorGql
     )
 
-    return (url: string, userId: string, x: number, y: number) => {
+    return (url: string, userId: string, x: number, y: number, name: string, avator: string, color: string) => {
         createRealtimeCursor(
             {
                 variables:
                 {
                     url: "URL#" + url, userId: "UserId#" + userId,
-                    x, y,
+                    x, y, name, avator, color
                 }
             })
     }

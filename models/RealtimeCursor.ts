@@ -1,7 +1,7 @@
-export type RealtimeUserAction = {
+export type RealtimeCursor = {
     key: string
-    actionId: string
-    value: string
+    x: number
+    y: number
     name: string
     avator: string
     color: string

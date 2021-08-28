@@ -45,7 +45,7 @@ export default () => {
 
         getInitialOnlineUser()
         const user = new User()
-        createRealtimeUser(url, user.userId, user.name, user.avator)
+        createRealtimeUser(url, user.userId, user.name, user.avator, user.color)
     }, [])
 
 
@@ -53,7 +53,7 @@ export default () => {
     useEffect(() => {
         setInterval(() => {
             const user = new User()
-            createRealtimeUser(url, user.userId, user.name, user.avator)
+            createRealtimeUser(url, user.userId, user.name, user.avator, user.color)
         }, POKE_INTERVAL_MILLISEC)
     }, [])
 

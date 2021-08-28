@@ -7,6 +7,9 @@ export default gql`
                 SK
                 x
                 y
+                name
+                avator
+                color
                 updatedAt
                 deleteTime
             }
@@ -17,6 +20,9 @@ export type onCreateRealtimeCursorResponse = {
     SK: string
     x: number
     y: number
+    name: string
+    avator: string
+    color: string
     updatedAt: string
     deleteTime: string
 }

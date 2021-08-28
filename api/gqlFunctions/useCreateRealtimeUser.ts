@@ -8,14 +8,16 @@ export const useCreateRealtimeUser = () => {
         createRealtimeUserGql
     )
 
-    return (url: string, userId: string, name: string, avator: string) => {
+    return (url: string, userId: string, name: string, avator: string, color: string) => {
         createRealtimeUser({
             variables:
             {
                 url: "URL#" + url,
                 userId: "UserId#" + userId,
                 name: name,
-                avator: avator
+                avator: avator,
+                color: color
+
             }
         })
     }

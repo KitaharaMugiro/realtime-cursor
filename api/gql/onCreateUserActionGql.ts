@@ -7,6 +7,9 @@ export default gql`
                 SK
                 actionId
                 value
+                name
+                avator
+                color
                 updatedAt
                 deleteTime
             }
@@ -17,6 +20,9 @@ export type onCreateUserActionResponse = {
     SK: string
     actionId: string
     value: string
+    name: string
+    avator: string
+    color: string
     updatedAt: string
     deleteTime: string
 }
