@@ -4,11 +4,12 @@ export default gql`
 query MyQuery($url: String!) {
     queryRealtimeUser(PK: $url) {
         items {
-        SK
-        avator
-        color
-        name
-        updatedAt
+            SK
+            avator
+            color
+            name
+            updatedAt
+            deleteTime
         }
     }
 }

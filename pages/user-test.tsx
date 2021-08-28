@@ -1,18 +1,15 @@
-import { useMutation } from '@apollo/client';
-import type { NextPage, NextPageContext } from 'next';
+import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useEffect, useState } from "react";
 import queryRealtimeUserGql from '../api/gql/queryRealtimeUserGql';
 import { useCreateRealtimeUser } from '../api/gqlFunctions/useCreateRealtimeUser';
-import { useQueryRealtimeUser } from "../api/gqlFunctions/useQueryRealtimeUsers";
 import { useOnCreateRealtimeUser } from '../api/gqlFunctions/useOnCreateRealtimeUser';
 import { useOnUpdateRealtimeUser } from '../api/gqlFunctions/useOnUpdateRealtimeUser';
+import { useUpdateRealtimeUser } from '../api/gqlFunctions/useUpdateRealtimeUser';
 import MyApolloClient from "../api/MyApolloClient";
-import ClientOnly from "../components/ClientOnly";
-import Countries from "../components/countries";
+import UserList from "../components/UserList";
 import User from '../models/User';
 import styles from '../styles/Home.module.css';
-import { useUpdateRealtimeUser } from '../api/gqlFunctions/useUpdateRealtimeUser';
 
 export async function getServerSideProps(context: any) { //typeないの？
     // URL情報は取れる
@@ -105,16 +102,25 @@ const Home: NextPage = (props: any) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className={styles.main}>
-                <h1 className={styles.title}>
-                    Welcome to <a href="https://nextjs.org">Next.js!</a>
+            <header className="header">
+                <h1 className="header_text">
+                    <a href="/" className="link_text">俺のサイト</a>
                 </h1>
 
-                {JSON.stringify(displayUserList.map(d => d.updatedAt))}
+                <nav className="nav">
+                    <ul className="ul">
+                        <div>
+                            <UserList realtimeUser={displayUserList} />
+                        </div>
+                    </ul>
+                </nav>
+            </header>
 
-                <ClientOnly>
-                    <Countries realtimeUser={displayUserList} />
-                </ClientOnly>
+
+            <main className={styles.main}>
+                <h1 className={styles.title}>
+                    右上にオンラインのユーザを表示
+                </h1>
             </main>
         </div>
     )

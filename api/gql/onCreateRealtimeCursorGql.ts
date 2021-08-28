@@ -8,6 +8,7 @@ export default gql`
                 x
                 y
                 updatedAt
+                deleteTime
             }
         }
         `

@@ -2,13 +2,13 @@ import { gql } from "@apollo/client";
 
 export default gql`
         subscription MySubscription($url: String!) {
-            onUpdateRealtimeUser(PK: $url) {
+            onCreateUserAction(PK: $url) {
                 PK
                 SK
-                avator
-                color
-                name
+                actionId
+                value
                 updatedAt
+                deleteTime
             }
         }
         `

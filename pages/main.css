@@ -12,3 +12,34 @@
     opacity: 0;
     transition: opacity 500ms ease-in;
   }
+
+  .header {
+    padding: 30px 4% 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    border: solid 1px gray;
+ }
+ .header_text {
+    margin: 0; padding: 0;
+    font-size: 20px;
+ }
+ .link_text {	
+    text-decoration: none;
+    color: #4b4b4b;
+ }
+ .nav {
+    margin: 0 0 0 auto;
+ }
+ .ul {
+    list-style: none;
+    margin: 0;
+    display: flex;
+ }
+ .li {
+    margin: 0 0 0 15px;
+    font-size: 14px;
+ }

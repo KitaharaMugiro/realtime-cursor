@@ -1,10 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useEffect, useState } from "react";
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import useCreateRealtimeCursor from '../api/gqlFunctions/useCreateRealtimeCursor';
 import useOnCreateRealtimeCursor from '../api/gqlFunctions/useOnCreateRealtimeCursor';
-import { Cursor } from '../components/Cursor';
 import { CursorAnimate } from '../components/CursorAnimate';
 import User from '../models/User';
 import styles from '../styles/Home.module.css';
@@ -50,7 +48,7 @@ const Home: NextPage = (props: any) => {
                     }
                 }
             )
-        }, 100);
+        }, 500);
         return () => {
             clearTimeout(timer);
         };
@@ -68,22 +66,27 @@ const Home: NextPage = (props: any) => {
         }
         const deleteUpdatedUser = displayCursorList.filter(d => d.SK !== createdCursor.SK)
         const joined = deleteUpdatedUser.concat(createdCursor);
-        const filtered = joined.filter((element, index, self) =>
+
+        // １分前の実装としては最悪
+        const now = new Date()
+        now.setSeconds(now.getSeconds() - 5)
+        const latestJoined = joined.filter(i => new Date(i.updatedAt) > now)
+        const filtered = latestJoined.filter((element, index, self) =>
             self.findIndex(e =>
                 e.SK === element.SK
             ) === index
         );
+
+
         setDisplayCursorList(filtered)
     }, [onCreateRealtimeCursorResponse.data])
 
     const renderCursors = () => {
         return displayCursorList.map(c => {
             return (
-
                 <CursorAnimate key={c.SK} curPos={{ x: c.x, y: c.y }} userInfo={{ name: "tekitou", avatar: "🐴", color: "red" }} />
             )
         })
-
     }
 
     return (

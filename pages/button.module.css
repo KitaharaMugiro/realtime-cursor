@@ -1,0 +1,16 @@
+
+.enterActive {
+  transform:scale(1)
+}
+
+.enterDone {
+  transform:scale(1)
+}
+
+.exitActive {
+  transform:scale(1.1)
+}
+
+.exitDone {
+  transform:scale(1)
+}
