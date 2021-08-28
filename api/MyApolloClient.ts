@@ -5,14 +5,18 @@ import { setContext } from '@apollo/client/link/context';
 import { createAuthLink, AuthOptions } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 
-const auth: AuthOptions = {
+
+//もうちょっとまとめる
+const API_KEY = "da2-gppg3vvan5f7phpprzhs4zqucu"
+const authInfo: AuthOptions = {
     type: "API_KEY",
-    apiKey: "da2-s55k4p7qinegrpbdtz5zqts6fq"
+    apiKey: API_KEY
 }
+
 const wssUrl = 'wss://yrfrr54drrejngccrpaw7gps5q.appsync-api.ap-northeast-1.amazonaws.com/graphql'
 const wsLink = process.browser ? ApolloLink.from([
-    createAuthLink({ url: wssUrl, region: "ap-northeast-1", auth }),
-    createSubscriptionHandshakeLink({ url: wssUrl, region: "ap-northeast-1", auth })
+    createAuthLink({ url: wssUrl, region: "ap-northeast-1", auth: authInfo }),
+    createSubscriptionHandshakeLink({ url: wssUrl, region: "ap-northeast-1", auth: authInfo })
 ]) : null;
 
 const httpLink = new HttpLink({
@@ -43,7 +47,7 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            "x-api-key": "da2-s55k4p7qinegrpbdtz5zqts6fq",
+            "x-api-key": API_KEY
         }
     }
 });
@@ -51,7 +55,7 @@ const authLink = setContext((_, { headers }) => {
 
 const MyApolloClient = new ApolloClient({
     link: authLink.concat(splitLink),
-    headers: { "x-api-key": "da2-s55k4p7qinegrpbdtz5zqts6fq" },
+    headers: { "x-api-key": API_KEY },
     cache: new InMemoryCache(),
 });
 

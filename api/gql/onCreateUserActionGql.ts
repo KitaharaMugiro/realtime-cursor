@@ -12,3 +12,11 @@ export default gql`
             }
         }
         `
+export type onCreateUserActionResponse = {
+    PK: string
+    SK: string
+    actionId: string
+    value: string
+    updatedAt: string
+    deleteTime: string
+}

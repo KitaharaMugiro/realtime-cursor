@@ -2,9 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useEffect, useState } from "react";
 import { CSSTransition } from 'react-transition-group';
-import useCreateRealtimeCursor from '../api/gqlFunctions/useCreateRealtimeCursor';
 import useCreateUserAction from '../api/gqlFunctions/useCreateUserAction';
-import useOnCreateRealtimeCursor from '../api/gqlFunctions/useOnCreateRealtimeCursor';
 import useOnCreateUserAction from '../api/gqlFunctions/useOnCreateUserAction';
 import NormalButton from '../components/NormalButton';
 import User from '../models/User';
@@ -31,24 +29,22 @@ const Home: NextPage = (props: any) => {
     const [fire3, setFire3] = useState(false)
 
     const { url } = props
-    const [createUserAction] = useCreateUserAction()
+    const createUserAction = useCreateUserAction()
 
     //Subscription
-    const onCreateUserAction = useOnCreateUserAction(url)
+    const createdAction = useOnCreateUserAction(url)
 
     const onClick = (actionId: string) => {
         const user = new User()
         const actionIdAndUserId = `ActionId#${actionId}UserId#${user.userId}`
         //TODO: urlに"URL#"つけ忘れて気づかなかった。。。。
-        createUserAction({ variables: { url: "URL#" + url, actionIdAndUserId, actionId, value: "clicked", updatedAt: user.updatedAt } })
+        createUserAction(url, user.userId, actionId, "clicked")
     }
 
 
     useEffect(() => {
-        const createdAction = onCreateUserAction.data?.onCreateUserAction
         console.log(createdAction)
         if (!createdAction) {
-            console.warn(onCreateUserAction.data)
             return
         }
         const actionId = createdAction.actionId
@@ -59,7 +55,7 @@ const Home: NextPage = (props: any) => {
         } else if (actionId === "button_3") {
             setFire3(true)
         }
-    }, [onCreateUserAction.data])
+    }, [createdAction])
 
 
 

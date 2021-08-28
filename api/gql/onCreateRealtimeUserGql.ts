@@ -13,3 +13,12 @@ export default gql`
             }
         }
         `
+export type onCreateRealtimeUserResponse = {
+    PK: string
+    SK: string
+    avator: string
+    color: string
+    name: string
+    updatedAt: string
+    deleteTime: string
+}

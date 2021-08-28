@@ -1,10 +1,13 @@
 import { useSubscription } from "@apollo/client";
 import onCreateRealtimeUserGql from "../gql/onCreateRealtimeUserGql";
-import onCreateUserActionGql from "../gql/onCreateUserActionGql";
+import onCreateUserActionGql, { onCreateUserActionResponse } from "../gql/onCreateUserActionGql";
 
-export default (url: string) => {
-    return useSubscription(
+export default (url: string): onCreateUserActionResponse => {
+    const response = useSubscription(
         onCreateUserActionGql,
         { variables: { url: "URL#" + url } }
     );
+
+    const createdUserAction = response.data?.onCreateUserAction
+    return createdUserAction
 }

@@ -12,3 +12,11 @@ export default gql`
             }
         }
         `
+export type onCreateRealtimeCursorResponse = {
+    PK: string
+    SK: string
+    x: number
+    y: number
+    updatedAt: string
+    deleteTime: string
+}

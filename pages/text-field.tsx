@@ -28,10 +28,10 @@ const Home: NextPage = (props: any) => {
     const [time, setTime] = useState(0)
 
     const { url } = props
-    const [createUserAction] = useCreateUserAction()
+    const createUserAction = useCreateUserAction()
 
     //Subscription
-    const onCreateUserAction = useOnCreateUserAction(url)
+    const createdAction = useOnCreateUserAction(url)
 
     const onChange = (text: string) => {
         setYourText(text)
@@ -43,10 +43,8 @@ const Home: NextPage = (props: any) => {
             if (!yourText) return
             const user = new User()
             const actionId = "text"
-            const actionIdAndUserId = `ActionId#${actionId}UserId#${user.userId}`
-            //TODO: urlに"URL#"つけ忘れて気づかなかった。。。。
             //TODO: テキストはsubstringしよう
-            createUserAction({ variables: { url: "URL#" + url, actionIdAndUserId, actionId, value: yourText, updatedAt: user.updatedAt } })
+            createUserAction(url, user.userId, actionId, yourText)
         }, 500);
         return () => {
             clearTimeout(timer);
@@ -55,24 +53,19 @@ const Home: NextPage = (props: any) => {
 
 
     useEffect(() => {
-        const createdAction = onCreateUserAction.data?.onCreateUserAction
         if (!createdAction) {
-            console.warn(onCreateUserAction.data)
             return
         }
         const SK = createdAction.SK
         const value = createdAction.value
         const updatedAt = createdAction.updatedAt
+        const deleteTime = createdAction.deleteTime
 
 
         const deleteUpdatedUser = displayChatList.filter(d => d.SK !== SK)
-        const joined = deleteUpdatedUser.concat({ SK: SK, text: value, updatedAt });
+        const joined = deleteUpdatedUser.concat({ SK: SK, text: value, updatedAt, deleteTime });
 
-
-        // １分前の実装としては最悪
-        const now = new Date()
-        now.setSeconds(now.getSeconds() - 30)
-        const latestJoined = joined.filter(i => new Date(i.updatedAt) > now)
+        const latestJoined = joined.filter(i => new Date(i.deleteTime) > new Date())
         const filtered = latestJoined.filter((element, index, self) =>
             self.findIndex(e =>
                 e.SK === element.SK
@@ -88,7 +81,7 @@ const Home: NextPage = (props: any) => {
             return 0;
         });
         setDisplayChatList(filtered)
-    }, [onCreateUserAction.data])
+    }, [createdAction])
 
     const renderChats = () => {
         return displayChatList.map(c => {

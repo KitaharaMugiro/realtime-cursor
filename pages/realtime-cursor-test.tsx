@@ -26,7 +26,7 @@ const Home: NextPage = (props: any) => {
     const [displayCursorList, setDisplayCursorList] = useState([])
     const [yourCursorPosition, setYourCursorPosition] = useState({ x: 0, y: 0 })
     const { url } = props
-    const [createRealtimeCursor] = useCreateRealtimeCursor()
+    const createRealtimeCursor = useCreateRealtimeCursor()
 
     const _onMouseMove = (e) => {
         setYourCursorPosition({ x: e.clientX, y: e.clientY });
@@ -38,16 +38,7 @@ const Home: NextPage = (props: any) => {
             if (!yourCursorPosition.x) return
             if (!yourCursorPosition.y) return
             const user = new User()
-            createRealtimeCursor(
-                {
-                    variables:
-                    {
-                        url: "URL#" + url, userId: "UserId#" + user.userId,
-                        x: yourCursorPosition.x, y: yourCursorPosition.y,
-                        updatedAt: user.updatedAt
-                    }
-                }
-            )
+            createRealtimeCursor(url, user.userId, yourCursorPosition.x, yourCursorPosition.y)
         }, 500);
         return () => {
             clearTimeout(timer);
@@ -56,21 +47,17 @@ const Home: NextPage = (props: any) => {
 
 
     //Subscription
-    const onCreateRealtimeCursorResponse = useOnCreateRealtimeCursor(url)
+    const createdCursor = useOnCreateRealtimeCursor(url)
 
     useEffect(() => {
-        const createdCursor = onCreateRealtimeCursorResponse.data?.onCreateRealtimeCursor
         if (!createdCursor) {
-            console.warn(onCreateRealtimeCursorResponse.data)
             return
         }
         const deleteUpdatedUser = displayCursorList.filter(d => d.SK !== createdCursor.SK)
         const joined = deleteUpdatedUser.concat(createdCursor);
 
-        // １分前の実装としては最悪
-        const now = new Date()
-        now.setSeconds(now.getSeconds() - 5)
-        const latestJoined = joined.filter(i => new Date(i.updatedAt) > now)
+
+        const latestJoined = joined.filter(i => new Date(i.deleteTime) > new Date())
         const filtered = latestJoined.filter((element, index, self) =>
             self.findIndex(e =>
                 e.SK === element.SK
@@ -79,7 +66,7 @@ const Home: NextPage = (props: any) => {
 
 
         setDisplayCursorList(filtered)
-    }, [onCreateRealtimeCursorResponse.data])
+    }, [createdCursor])
 
     const renderCursors = () => {
         return displayCursorList.map(c => {

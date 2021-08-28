@@ -2,7 +2,6 @@ export default class {
     userId: string
     name: string
     avator: string
-    updatedAt: string
 
     constructor() {
         this.userId = localStorage.getItem("userId") as string
@@ -14,6 +13,5 @@ export default class {
 
         this.name = "random name"
         this.avator = "🐴"
-        this.updatedAt = new Date().toString()
     }
 }
