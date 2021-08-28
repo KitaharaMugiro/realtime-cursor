@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import queryRealtimeUserGql, { queryRealtimeUserResponse } from "../gql/queryRealtimeUserGql";
 import MyApolloClient from "../MyApolloClient";
 
-export const useQueryRealtimeUser = async (url: string): Promise<queryRealtimeUserResponse> => {
+export const listRealtimeUser = async (url: string): Promise<queryRealtimeUserResponse> => {
 
     const { data } = await MyApolloClient.query({
         query: queryRealtimeUserGql,

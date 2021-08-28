@@ -1,29 +1,43 @@
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
-import queryRealtimeUserGql from "../api/gql/queryRealtimeUserGql";
 import { useCreateRealtimeUser } from "../api/gqlFunctions/useCreateRealtimeUser";
 import { useOnCreateRealtimeUser } from "../api/gqlFunctions/useOnCreateRealtimeUser";
-import { useQueryRealtimeUser } from "../api/gqlFunctions/useQueryRealtimeUsers";
-import MyApolloClient from "../api/MyApolloClient";
+import { listRealtimeUser } from "../api/gqlFunctions/listRealtimeUsers";
 import User from "../models/User";
+import { OnlineUser } from "../models/OnlineUser";
+import { queryRealtimeUserResponse } from "../api/gql/queryRealtimeUserGql";
+import { deleteDuplicateKey, filteringOutByDeletetime, updateArray } from "./clientCommonUtils";
+
+const convertResponseToModel = (response: queryRealtimeUserResponse[0]): OnlineUser => {
+    return { ...response, key: response.SK }
+}
+
 
 export default () => {
 
-    /** URL取得 */
+    /* 定数 */
+    const POKE_INTERVAL_MILLISEC = 5005
+
+    /* URL取得 */
     const router = useRouter()
     const url = router.basePath
 
+    /* 返り値定義 */
+    const [onlineUserList, setOnlineUserList] = useState<OnlineUser[]>([])
 
-    const [onlineUserList, setOnlineUserList] = useState([])
+    /* create mutation */
     const createRealtimeUser = useCreateRealtimeUser()
+
+    /* subscription */
     const createdUser = useOnCreateRealtimeUser(url)
 
 
     useEffect(() => {
         const getInitialOnlineUser = async () => {
-            const initialOnlineUserList = await useQueryRealtimeUser(url)
-            //TODO: deleteTimeによるフィルタリング
-            setOnlineUserList(initialOnlineUserList)
+            const initialOnlineUserList = await listRealtimeUser(url)
+            const models = initialOnlineUserList.map(a => convertResponseToModel(a))
+            const filteredModels = filteringOutByDeletetime(models)
+            setOnlineUserList(filteredModels)
         }
 
         getInitialOnlineUser()
@@ -37,7 +51,7 @@ export default () => {
         setInterval(() => {
             const user = new User()
             createRealtimeUser(url, user.userId, user.name, user.avator)
-        }, 5000)
+        }, POKE_INTERVAL_MILLISEC)
     }, [])
 
 
@@ -46,14 +60,10 @@ export default () => {
         if (!createdUser) {
             return
         }
-        const deleteUpdatedUser = onlineUserList.filter(d => d.SK !== createdUser.SK && new Date(d.deleteTime) > new Date())
-        const joined = deleteUpdatedUser.concat(createdUser);
-        const filtered = joined.filter((element, index, self) =>
-            self.findIndex(e =>
-                e.SK === element.SK
-            ) === index
-        );
-        setOnlineUserList(filtered)
+        const createdUserModel = convertResponseToModel(createdUser)
+        const newOnlineUserList = updateArray(onlineUserList, createdUserModel)
+        const filteredModels = filteringOutByDeletetime(newOnlineUserList)
+        setOnlineUserList(filteredModels)
     }, [createdUser])
 
     return onlineUserList
