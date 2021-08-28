@@ -4,50 +4,20 @@ import React, { useEffect, useState } from "react";
 import { CSSTransition } from 'react-transition-group';
 import useCreateUserAction from '../api/gqlFunctions/useCreateUserAction';
 import useOnCreateUserAction from '../api/gqlFunctions/useOnCreateUserAction';
+import useRealtimeUserAction from '../client/useRealtimeUserAction';
 import NormalButton from '../components/NormalButton';
 import User from '../models/User';
 import styles from '../styles/Home.module.css';
 import style from "./button.module.css";
 
-export async function getServerSideProps(context: any) {
-    // URL情報は取れる
-    const host = context.req.headers.host
-    const path = context.resolvedUrl
-    const url = host + path
-    return {
-        props: {
-            url: url
-        },
-    };
 
-}
-
-
-const Home: NextPage = (props: any) => {
+const Home: NextPage = () => {
     const [fire1, setFire1] = useState(false)
     const [fire2, setFire2] = useState(false)
     const [fire3, setFire3] = useState(false)
 
-    const { url } = props
-    const createUserAction = useCreateUserAction()
-
-    //Subscription
-    const createdAction = useOnCreateUserAction(url)
-
-    const onClick = (actionId: string) => {
-        const user = new User()
-        const actionIdAndUserId = `ActionId#${actionId}UserId#${user.userId}`
-        //TODO: urlに"URL#"つけ忘れて気づかなかった。。。。
-        createUserAction(url, user.userId, actionId, "clicked")
-    }
-
-
-    useEffect(() => {
-        console.log(createdAction)
-        if (!createdAction) {
-            return
-        }
-        const actionId = createdAction.actionId
+    //callback式の記述
+    const { pushUserAction } = useRealtimeUserAction((actionId: string, value: string) => {
         if (actionId === "button_1") {
             setFire1(true)
         } else if (actionId === "button_2") {
@@ -55,9 +25,11 @@ const Home: NextPage = (props: any) => {
         } else if (actionId === "button_3") {
             setFire3(true)
         }
-    }, [createdAction])
+    })
 
-
+    const onClick = (actionId: string) => {
+        pushUserAction(actionId, "clicked")
+    }
 
     return (
         <div className={styles.container}>

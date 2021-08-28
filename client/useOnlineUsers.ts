@@ -1,14 +1,15 @@
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
+import { queryRealtimeUserResponse } from "../api/gql/queryRealtimeUserGql";
+import { listRealtimeUser } from "../api/gqlFunctions/listRealtimeUsers";
 import { useCreateRealtimeUser } from "../api/gqlFunctions/useCreateRealtimeUser";
 import { useOnCreateRealtimeUser } from "../api/gqlFunctions/useOnCreateRealtimeUser";
-import { listRealtimeUser } from "../api/gqlFunctions/listRealtimeUsers";
-import User from "../models/User";
 import { OnlineUser } from "../models/OnlineUser";
-import { queryRealtimeUserResponse } from "../api/gql/queryRealtimeUserGql";
-import { deleteDuplicateKey, filteringOutByDeletetime, updateArray } from "./clientCommonUtils";
+import User from "../models/User";
+import { filteringOutByDeletetime, updateArray } from "./clientCommonUtils";
 
-const convertResponseToModel = (response: queryRealtimeUserResponse[0]): OnlineUser => {
+const convertResponseToModel = (response: queryRealtimeUserResponse[0]): OnlineUser | undefined => {
+    if (!response) return undefined
     return { ...response, key: response.SK }
 }
 
@@ -29,13 +30,15 @@ export default () => {
     const createRealtimeUser = useCreateRealtimeUser()
 
     /* subscription */
-    const createdUser = useOnCreateRealtimeUser(url)
+    const _createdUser = useOnCreateRealtimeUser(url)
+    const createdUser = convertResponseToModel(_createdUser)
 
 
+    /* 初期データの取得 */
     useEffect(() => {
         const getInitialOnlineUser = async () => {
             const initialOnlineUserList = await listRealtimeUser(url)
-            const models = initialOnlineUserList.map(a => convertResponseToModel(a))
+            const models = initialOnlineUserList.map(a => convertResponseToModel(a)!) //TODO: 強制unwrapはちょっと怖い
             const filteredModels = filteringOutByDeletetime(models)
             setOnlineUserList(filteredModels)
         }
@@ -46,7 +49,7 @@ export default () => {
     }, [])
 
 
-    /**定期的なpoke */
+    /* 定期的なpoke */
     useEffect(() => {
         setInterval(() => {
             const user = new User()
@@ -55,13 +58,12 @@ export default () => {
     }, [])
 
 
-    /** OnlineUserが追加/更新した際の処理 */
+    /* OnlineUserが追加/更新した際の処理 */
     useEffect(() => {
         if (!createdUser) {
             return
         }
-        const createdUserModel = convertResponseToModel(createdUser)
-        const newOnlineUserList = updateArray(onlineUserList, createdUserModel)
+        const newOnlineUserList = updateArray(onlineUserList, createdUser)
         const filteredModels = filteringOutByDeletetime(newOnlineUserList)
         setOnlineUserList(filteredModels)
     }, [createdUser])

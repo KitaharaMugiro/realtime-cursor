@@ -3,96 +3,53 @@ import Head from 'next/head';
 import React, { useEffect, useState } from "react";
 import useCreateUserAction from '../api/gqlFunctions/useCreateUserAction';
 import useOnCreateUserAction from '../api/gqlFunctions/useOnCreateUserAction';
+import useRealtimeUserAction from '../client/useRealtimeUserAction';
 import BottomTextField from '../components/BottomTextField';
 import Fukidashi from '../components/Fukidashi';
 import User from '../models/User';
 import styles from '../styles/Home.module.css';
 
-export async function getServerSideProps(context: any) {
-    // URL情報は取れる
-    const host = context.req.headers.host
-    const path = context.resolvedUrl
-    const url = host + path
-    return {
-        props: {
-            url: url
-        },
-    };
-
-}
-
-
-const Home: NextPage = (props: any) => {
-    const [displayChatList, setDisplayChatList] = useState([])
+const Home: NextPage = () => {
+    const [displayChatList, setDisplayChatList] = useState<{ key: string, text: string }[]>([])
     const [yourText, setYourText] = useState("")
     const [time, setTime] = useState(0)
 
-    const { url } = props
-    const createUserAction = useCreateUserAction()
 
-    //Subscription
-    const createdAction = useOnCreateUserAction(url)
+    const { pushUserAction, userActionList } = useRealtimeUserAction()
 
     const onChange = (text: string) => {
         setYourText(text)
     }
 
     useEffect(() => {
+        const messeges = userActionList.map(u => {
+            return {
+                key: u.key,
+                text: u.value
+            }
+        })
+        setDisplayChatList(messeges)
+    }, [userActionList])
+
+    useEffect(() => {
         const timer = setTimeout(() => {
             setTime(time + 1);
             if (!yourText) return
-            const user = new User()
             const actionId = "text"
-            //TODO: テキストはsubstringしよう
-            createUserAction(url, user.userId, actionId, yourText)
+            pushUserAction(actionId, yourText)
         }, 500);
         return () => {
             clearTimeout(timer);
         };
     }, [time]);
 
-
-    useEffect(() => {
-        if (!createdAction) {
-            return
-        }
-        const SK = createdAction.SK
-        const value = createdAction.value
-        const updatedAt = createdAction.updatedAt
-        const deleteTime = createdAction.deleteTime
-
-
-        const deleteUpdatedUser = displayChatList.filter(d => d.SK !== SK)
-        const joined = deleteUpdatedUser.concat({ SK: SK, text: value, updatedAt, deleteTime });
-
-        const latestJoined = joined.filter(i => new Date(i.deleteTime) > new Date())
-        const filtered = latestJoined.filter((element, index, self) =>
-            self.findIndex(e =>
-                e.SK === element.SK
-            ) === index
-        );
-
-        filtered.sort(function (a, b) {
-            var keyA = a.SK,
-                keyB = b.SK;
-            // Compare the 2 dates
-            if (keyA < keyB) return -1;
-            if (keyA > keyB) return 1;
-            return 0;
-        });
-        setDisplayChatList(filtered)
-    }, [createdAction])
-
     const renderChats = () => {
         return displayChatList.map(c => {
             return (
-                <Fukidashi key={c.SK} text={c.text} />
+                <Fukidashi key={c.key} text={c.text} />
             )
         })
     }
-
-
-
 
     return (
         <div className={styles.container_for_chat}>

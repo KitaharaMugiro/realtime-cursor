@@ -4,13 +4,13 @@ export const filteringOutByDeletetime = <T>(array: T[]) => {
     return array.filter(d => new Date(d.deleteTime) > new Date())
 }
 
-export const deleteDuplicateKey = <T>(array: T[]) => {
-    return array.filter((element, index, self) =>
-        self.findIndex(e =>
-            e.key === element.key
-        ) === index
-    );
-}
+// export const deleteDuplicateKey = <T>(array: T[]) => {
+//     return array.filter((element, index, self) =>
+//         self.findIndex(e =>
+//             e.key === element.key
+//         ) === index
+//     );
+// }
 
 export const updateArray = <T>(array: T[], newElement: T) => {
     const deletedArray = array.filter(d => d.key !== newElement.key)
