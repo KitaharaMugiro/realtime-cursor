@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { CSSTransition } from 'react-transition-group';
 import NormalButton from '../components/NormalButton';
 import useRealtimeUserAction from '../src/client/useRealtimeUserAction';
-import styles from '../styles/Home.module.css';
-import style from "./button.module.css";
+// import styles from '../styles/Home.module.css';
+// import style from "./button.module.css";
+let styles = require('../styles/Home.module.css')
+let style = require("./button.module.css")
 
 
 const Home: NextPage = () => {

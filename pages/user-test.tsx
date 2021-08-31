@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import React from "react";
 import UserList from "../components/UserList";
 import useOnlineUsers from '../src/client/useOnlineUsers';
-import styles from '../styles/Home.module.css';
+let styles = require('../styles/Home.module.css')
 
 const Home: NextPage = () => {
     const { onlineUserList } = useOnlineUsers()
