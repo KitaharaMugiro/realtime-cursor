@@ -2,10 +2,12 @@
 
 import { useMutation } from "@apollo/client";
 import createUserActionGql from "../gql/createUserActionGql";
+import MyApolloClient from "../MyApolloClient";
 
 export default () => {
     const [createUserAction] = useMutation(
-        createUserActionGql
+        createUserActionGql,
+        { client: MyApolloClient }
     )
     return (url: string, userId: string, actionId: string, value: string, name: string, avator: string, color: string) => {
         const actionIdAndUserId = `ActionId#${actionId}UserId#${userId}`

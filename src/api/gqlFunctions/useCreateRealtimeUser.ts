@@ -1,11 +1,12 @@
 
 
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import createRealtimeUserGql from "../gql/createRealtimeUserGql";
+import MyApolloClient from "../MyApolloClient";
 
 export const useCreateRealtimeUser = () => {
     const [createRealtimeUser] = useMutation(
-        createRealtimeUserGql
+        createRealtimeUserGql, { client: MyApolloClient }
     )
 
     return (url: string, userId: string, name: string, avator: string, color: string) => {

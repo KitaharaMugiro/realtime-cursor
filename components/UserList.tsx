@@ -1,4 +1,4 @@
-import { OnlineUser } from "../models/OnlineUser";
+import { OnlineUser } from "../src/models/OnlineUser";
 import styles from "./userlist.module.css"
 interface Props {
     realtimeUser: Array<OnlineUser>

@@ -1,12 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CSSTransition } from 'react-transition-group';
-import useCreateUserAction from '../api/gqlFunctions/useCreateUserAction';
-import useOnCreateUserAction from '../api/gqlFunctions/useOnCreateUserAction';
-import useRealtimeUserAction from '../client/useRealtimeUserAction';
 import NormalButton from '../components/NormalButton';
-import User from '../models/User';
+import useRealtimeUserAction from '../src/client/useRealtimeUserAction';
 import styles from '../styles/Home.module.css';
 import style from "./button.module.css";
 

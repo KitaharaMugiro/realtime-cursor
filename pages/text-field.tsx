@@ -1,12 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useEffect, useState } from "react";
-import useCreateUserAction from '../api/gqlFunctions/useCreateUserAction';
-import useOnCreateUserAction from '../api/gqlFunctions/useOnCreateUserAction';
-import useRealtimeUserAction from '../client/useRealtimeUserAction';
+import useRealtimeUserAction from '../src/client/useRealtimeUserAction';
 import BottomTextField from '../components/BottomTextField';
 import Fukidashi from '../components/Fukidashi';
-import User from '../models/User';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
@@ -33,6 +30,7 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
+            if (!pushUserAction) return
             setTime(time + 1);
             if (!yourText) return
             const actionId = "text"

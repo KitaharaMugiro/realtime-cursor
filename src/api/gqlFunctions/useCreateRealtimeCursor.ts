@@ -1,12 +1,12 @@
 
 
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import createRealtimeCursorGql from "../gql/createRealtimeCursorGql";
-import createRealtimeUserGql from "../gql/createRealtimeUserGql";
+import MyApolloClient from "../MyApolloClient";
 
 export default () => {
     const [createRealtimeCursor] = useMutation(
-        createRealtimeCursorGql
+        createRealtimeCursorGql, { client: MyApolloClient }
     )
 
     return (url: string, userId: string, x: number, y: number, name: string, avator: string, color: string) => {

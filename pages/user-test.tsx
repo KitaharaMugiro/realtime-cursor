@@ -1,12 +1,11 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import React from "react";
-import useOnlineUsers from '../client/useOnlineUsers';
 import UserList from "../components/UserList";
+import useOnlineUsers from '../src/client/useOnlineUsers';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
-    const onlineUserList = useOnlineUsers()
+    const { onlineUserList } = useOnlineUsers()
 
     return (
         <div className={styles.container}>

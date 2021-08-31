@@ -1,4 +1,4 @@
-import { useRouter } from "next/dist/client/router";
+
 import { useEffect, useState } from "react";
 import { onCreateUserActionResponse } from "../api/gql/onCreateUserActionGql";
 import useCreateUserAction from "../api/gqlFunctions/useCreateUserAction";
@@ -15,8 +15,16 @@ const convertResponseToModel = (response: onCreateUserActionResponse): RealtimeU
 export default (callback?: (actionId: string, value: string) => void) => {
 
     /* URL取得 */
-    const router = useRouter()
-    const url = router.basePath
+    if (typeof window === "undefined") return {
+        loading: true,
+        pushUserAction: (args: any) => { },
+        createdUserAction: (args: any) => { },
+        userActionList: []
+
+    }
+    const host = window.location.host
+    const path = window.location.pathname
+    const url = host + path
 
     /* create mutation */
     const createUserAction = useCreateUserAction()

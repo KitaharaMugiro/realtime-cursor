@@ -1,4 +1,4 @@
-import { useRouter } from "next/dist/client/router";
+
 import { useEffect, useState } from "react";
 import { queryRealtimeUserResponse } from "../api/gql/queryRealtimeUserGql";
 import { listRealtimeUser } from "../api/gqlFunctions/listRealtimeUsers";
@@ -20,8 +20,10 @@ export default () => {
     const POKE_INTERVAL_MILLISEC = 5005
 
     /* URL取得 */
-    const router = useRouter()
-    const url = router.basePath
+    if (typeof window === "undefined") return { loading: true, onlineUserList: [] }
+    const host = window.location.host
+    const path = window.location.pathname
+    const url = host + path
 
     /* 返り値定義 */
     const [onlineUserList, setOnlineUserList] = useState<OnlineUser[]>([])
@@ -68,6 +70,6 @@ export default () => {
         setOnlineUserList(filteredModels)
     }, [createdUser])
 
-    return onlineUserList
+    return { onlineUserList }
 
 }
