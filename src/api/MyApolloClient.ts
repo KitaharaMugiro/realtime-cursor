@@ -15,7 +15,7 @@ const authInfo: AuthOptions = {
 }
 
 const wssUrl = 'wss://yrfrr54drrejngccrpaw7gps5q.appsync-api.ap-northeast-1.amazonaws.com/graphql'
-const wsLink = process.browser ? ApolloLink.from([
+const wsLink = (process as any).browser ? ApolloLink.from([
     createAuthLink({ url: wssUrl, region: "ap-northeast-1", auth: authInfo }),
     createSubscriptionHandshakeLink({ url: wssUrl, region: "ap-northeast-1", auth: authInfo })
 ]) : null;

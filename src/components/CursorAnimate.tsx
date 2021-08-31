@@ -1,7 +1,6 @@
-import React, { ReactComponentElement } from "react";
+import React from "react";
 import { Cursor } from "./Cursor";
-import styles from "./cursor.module.css";
-
+let styles = require("./cursor.module.css");
 type CurPos = {
     x: number, y: number
 }
@@ -48,4 +47,4 @@ const CursorAnimate = (props: Props) => {
 
 }
 
-export { CursorAnimate }
+export { CursorAnimate };

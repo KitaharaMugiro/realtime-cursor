@@ -1,4 +1,5 @@
-import styles from "./cursor.module.css";
+import React from "react";
+let styles = require("./cursor.module.css");
 
 interface Props {
     userInfo: { color: string, avatar: string, name: string }
