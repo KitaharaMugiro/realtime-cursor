@@ -46,19 +46,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
 var listRealtimeUsers_1 = require("../api/gqlFunctions/listRealtimeUsers");
 var useCreateRealtimeUser_1 = require("../api/gqlFunctions/useCreateRealtimeUser");
 var useOnCreateRealtimeUser_1 = require("../api/gqlFunctions/useOnCreateRealtimeUser");
-var User_1 = require("../models/User");
+var User_1 = __importDefault(require("../models/User"));
 var clientCommonUtils_1 = require("./clientCommonUtils");
 var convertResponseToModel = function (response) {
     if (!response)
         return undefined;
     return __assign(__assign({}, response), { key: response.SK });
 };
-exports["default"] = (function () {
+exports.default = (function () {
     /* 定数 */
     var POKE_INTERVAL_MILLISEC = 5005;
     /* URL取得 */
@@ -92,13 +95,13 @@ exports["default"] = (function () {
             });
         }); };
         getInitialOnlineUser();
-        var user = new User_1["default"]();
+        var user = new User_1.default();
         createRealtimeUser(url, user.userId, user.name, user.avator, user.color);
     }, []);
     /* 定期的なpoke */
     react_1.useEffect(function () {
         setInterval(function () {
-            var user = new User_1["default"]();
+            var user = new User_1.default();
             createRealtimeUser(url, user.userId, user.name, user.avator, user.color);
         }, POKE_INTERVAL_MILLISEC);
     }, []);

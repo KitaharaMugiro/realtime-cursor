@@ -1,11 +1,14 @@
 "use strict";
-exports.__esModule = true;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.useCreateRealtimeUser = void 0;
 var client_1 = require("@apollo/client");
-var createRealtimeUserGql_1 = require("../gql/createRealtimeUserGql");
-var MyApolloClient_1 = require("../MyApolloClient");
+var createRealtimeUserGql_1 = __importDefault(require("../gql/createRealtimeUserGql"));
+var MyApolloClient_1 = __importDefault(require("../MyApolloClient"));
 var useCreateRealtimeUser = function () {
-    var createRealtimeUser = client_1.useMutation(createRealtimeUserGql_1["default"], { client: MyApolloClient_1["default"] })[0];
+    var createRealtimeUser = client_1.useMutation(createRealtimeUserGql_1.default, { client: MyApolloClient_1.default })[0];
     return function (url, userId, name, avator, color) {
         createRealtimeUser({
             variables: {

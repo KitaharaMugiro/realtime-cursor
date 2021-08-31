@@ -10,7 +10,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = require("@apollo/client");
 var utilities_1 = require("@apollo/client/utilities");
 var context_1 = require("@apollo/client/link/context");
@@ -54,6 +54,6 @@ var authLink = context_1.setContext(function (_, _a) {
 var MyApolloClient = new client_1.ApolloClient({
     link: authLink.concat(splitLink),
     headers: { "x-api-key": API_KEY },
-    cache: new client_1.InMemoryCache()
+    cache: new client_1.InMemoryCache(),
 });
-exports["default"] = MyApolloClient;
+exports.default = MyApolloClient;

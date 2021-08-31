@@ -10,18 +10,21 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-exports.__esModule = true;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
-var useCreateUserAction_1 = require("../api/gqlFunctions/useCreateUserAction");
-var useOnCreateUserAction_1 = require("../api/gqlFunctions/useOnCreateUserAction");
-var User_1 = require("../models/User");
+var useCreateUserAction_1 = __importDefault(require("../api/gqlFunctions/useCreateUserAction"));
+var useOnCreateUserAction_1 = __importDefault(require("../api/gqlFunctions/useOnCreateUserAction"));
+var User_1 = __importDefault(require("../models/User"));
 var clientCommonUtils_1 = require("./clientCommonUtils");
 var convertResponseToModel = function (response) {
     if (!response)
         return undefined;
     return __assign(__assign({}, response), { key: response.SK });
 };
-exports["default"] = (function (callback) {
+exports.default = (function (callback) {
     /* URL取得 */
     if (typeof window === "undefined")
         return {
@@ -34,16 +37,16 @@ exports["default"] = (function (callback) {
     var path = window.location.pathname;
     var url = host + path;
     /* create mutation */
-    var createUserAction = useCreateUserAction_1["default"]();
+    var createUserAction = useCreateUserAction_1.default();
     /* subscription */
-    var _createdAction = useOnCreateUserAction_1["default"](url);
+    var _createdAction = useOnCreateUserAction_1.default(url);
     /* 返り値定義 */
     var createdUserAction = convertResponseToModel(_createdAction);
     /* 返り値定義 */
     var _a = react_1.useState([]), userActionList = _a[0], setUserActionList = _a[1];
     /* pushメソッド定義 */
     var pushUserAction = function (actionId, value) {
-        var user = new User_1["default"]();
+        var user = new User_1.default();
         createUserAction(url, user.userId, actionId, value, user.name, user.avator, user.color);
     };
     /* callbackの実行 */

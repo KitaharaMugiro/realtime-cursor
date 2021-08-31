@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateArray = exports.filteringOutByDeletetime = void 0;
 var filteringOutByDeletetime = function (array) {
     //TODO: deleteTimeをrequiredにする方法はないのか？
