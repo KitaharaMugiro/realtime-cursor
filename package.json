@@ -1,14 +1,13 @@
 {
   "name": "realtime-cursor",
-  "version": "0.1.0",
-  "private": true,
-  "main": "dist/index.js",
+  "version": "0.3.0",
+  "main": "dist/index.jsx",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build-package": "tsc"
+    "build-package": "tsc -d"
   },
   "devDependencies": {
     "@apollo/client": "^3.4.8",
@@ -27,6 +26,17 @@
     "subscriptions-transport-ws": "^0.9.19",
     "typescript": "4.3.5",
     "typescript-plugin-css-modules": "^3.4.0",
+    "uuid": "^8.3.2"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.4.8",
+    "aws-appsync-auth-link": "^3.0.6",
+    "aws-appsync-subscription-link": "^3.0.8",
+    "graphql": "^15.5.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-transition-group": "^4.4.2",
+    "subscriptions-transport-ws": "^0.9.19",
     "uuid": "^8.3.2"
   },
   "peerDependencies": {
