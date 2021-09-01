@@ -1,4 +1,4 @@
-.collaborator {
+.realtimely_collaborator {
     position: absolute;
     left: 0;
     top: 0;
@@ -8,7 +8,7 @@
     pointer-events: none;
   }
   
-  .cursor {
+  .realtimely_cursor {
     position: absolute;
     font-family: "Inter", sans-serif;
     font-size: 11px;
@@ -17,13 +17,13 @@
     cursor: pointer;
   }
   
-  .pointer {
+  .realtimely_pointer {
     display: inline-block;
     transform: rotate(-127deg);
     font-size: 16px;
   }
   
-  .userinfo {
+  .realtimely_userinfo {
     display: block;
     margin: 4px 16px;
     padding: 5px;

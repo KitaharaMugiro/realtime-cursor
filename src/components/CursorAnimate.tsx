@@ -1,6 +1,6 @@
 import React from "react";
 import { Cursor } from "./Cursor";
-let styles = require("./cursor.module.css");
+import "./cursor.module.css";
 type CurPos = {
     x: number, y: number
 }
@@ -33,7 +33,7 @@ const CursorAnimate = (props: Props) => {
 
     return (
         <div
-            className={styles.cursor}
+            className="realtimely_cursor"
             style={{
                 left: 0,
                 top: 0,
