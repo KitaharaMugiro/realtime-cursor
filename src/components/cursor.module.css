@@ -1,14 +1,4 @@
-.realtimely_collaborator {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    transition: opacity 100ms linear;
-    pointer-events: none;
-  }
-  
-  .realtimely_cursor {
+    .realtimely_cursor {
     position: absolute;
     font-family: "Inter", sans-serif;
     font-size: 11px;

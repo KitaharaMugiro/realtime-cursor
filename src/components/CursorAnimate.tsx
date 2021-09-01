@@ -35,6 +35,12 @@ const CursorAnimate = (props: Props) => {
         <div
             className="realtimely_cursor"
             style={{
+                position: "absolute",
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "11px",
+                fontWeight: 400,
+                lineHeight: "1em",
+                cursor: "pointer",
                 left: 0,
                 top: 0,
                 transform: `translateX(${curPos.x}px) translateY(${curPos.y}px)`,
