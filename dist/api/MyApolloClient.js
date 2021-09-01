@@ -12,8 +12,8 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = require("@apollo/client");
-var utilities_1 = require("@apollo/client/utilities");
 var context_1 = require("@apollo/client/link/context");
+var utilities_1 = require("@apollo/client/utilities");
 var aws_appsync_auth_link_1 = require("aws-appsync-auth-link");
 var aws_appsync_subscription_link_1 = require("aws-appsync-subscription-link");
 // ライブラリ化するとなるとここの部分が一気に難易度上がる・・

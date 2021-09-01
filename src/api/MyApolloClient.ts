@@ -1,8 +1,7 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, split } from "@apollo/client";
-import { WebSocketLink } from '@apollo/client/link/ws';
-import { getMainDefinition } from "@apollo/client/utilities";
 import { setContext } from '@apollo/client/link/context';
-import { createAuthLink, AuthOptions } from 'aws-appsync-auth-link';
+import { getMainDefinition } from "@apollo/client/utilities";
+import { AuthOptions, createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 
 // ライブラリ化するとなるとここの部分が一気に難易度上がる・・

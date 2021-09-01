@@ -22,9 +22,10 @@
         "name": "typescript-plugin-css-modules"
       }
     ],
-    "noEmit": true
+    "noEmit": false
   },
   "include": [
+    "./src/index.tsx",
     "./src/**/*.ts",
     "./src/**/*.tsx"
   ],

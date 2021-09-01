@@ -1,4 +1,3 @@
-import { gql, useQuery } from "@apollo/client";
 import queryRealtimeUserGql, { queryRealtimeUserResponse } from "../gql/queryRealtimeUserGql";
 import MyApolloClient from "../MyApolloClient";
 
