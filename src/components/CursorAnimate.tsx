@@ -1,6 +1,5 @@
 import React from "react";
 import { Cursor } from "./Cursor";
-import "./cursor.module.css";
 type CurPos = {
     x: number, y: number
 }

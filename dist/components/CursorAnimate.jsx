@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CursorAnimate = void 0;
 var react_1 = __importDefault(require("react"));
 var Cursor_1 = require("./Cursor");
-var styles = require("./cursor.module.css");
 var CursorAnimate = function (props) {
     var curPos = props.curPos;
     var userInfo = props.userInfo;
@@ -18,7 +17,13 @@ var CursorAnimate = function (props) {
             return <Cursor_1.Cursor userInfo={userInfo}/>;
         }
     };
-    return (<div className={styles.cursor} style={{
+    return (<div className="realtimely_cursor" style={{
+            position: "absolute",
+            fontFamily: '"Inter", sans-serif',
+            fontSize: "11px",
+            fontWeight: 400,
+            lineHeight: "1em",
+            cursor: "pointer",
             left: 0,
             top: 0,
             transform: "translateX(" + curPos.x + "px) translateY(" + curPos.y + "px)",
