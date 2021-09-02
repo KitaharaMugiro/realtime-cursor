@@ -249,8 +249,8 @@ export default class {
         if (!_userInfoJson) {
             const userId = uuidv4()
             const avatorIndex = Math.floor(Math.random() * AVATOR_LIST.length)
-            const nameIndex = Math.floor(Math.random() * AVATOR_LIST.length)
-            const colorIndex = Math.floor(Math.random() * AVATOR_LIST.length)
+            const nameIndex = Math.floor(Math.random() * NAME_LIST.length)
+            const colorIndex = Math.floor(Math.random() * COLOR_LIST.length)
             localStorage.setItem("REALTIME_USER_INFO", JSON.stringify({
                 userId, avatorIndex, nameIndex, colorIndex
             }))

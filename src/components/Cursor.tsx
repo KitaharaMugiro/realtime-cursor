@@ -15,7 +15,8 @@ const Cursor = (props: Props) => {
                         display: "inline-block",
                         transform: "rotate(-127deg)",
                         fontSize: "16px",
-                        color: userInfo.color
+                        color: userInfo.color ?? "gray",
+                        textAlign: "left"
                     }
                 }>
                 ➤
@@ -27,7 +28,7 @@ const Cursor = (props: Props) => {
                     margin: "4px 16px",
                     padding: "5px",
                     whiteSpace: "nowrap",
-                    backgroundColor: userInfo.color,
+                    backgroundColor: userInfo.color ?? "gray",
                     color: "white",
                 }}
             >

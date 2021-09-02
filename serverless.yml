@@ -1,0 +1,2 @@
+realtimely:
+  component: "@sls-next/serverless-component"

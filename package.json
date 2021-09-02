@@ -7,37 +7,28 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "deploy": "serverless",
     "build-package": "tsc -d"
   },
   "devDependencies": {
-    "@apollo/client": "^3.4.8",
     "@types/react": "17.0.19",
     "@types/react-transition-group": "^4.4.2",
     "@types/uuid": "^8.3.1",
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.1.0",
-    "next": "11.1.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-transition-group": "^4.4.2",
+    "serverless": "^2.57.0",
     "typescript": "4.3.5",
-    "typescript-plugin-css-modules": "^3.4.0",
+    "typescript-plugin-css-modules": "^3.4.0"
   },
   "dependencies": {
+    "next": "11.1.0",
     "@apollo/client": "^3.4.8",
     "aws-appsync-auth-link": "^3.0.6",
     "aws-appsync-subscription-link": "^3.0.8",
     "graphql": "^15.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "realtimely": "^1.1.0",
     "subscriptions-transport-ws": "^0.9.19",
-    "uuid": "^8.3.2"
-  },
-  "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  },
-  "files": [
-    "dist"
-  ]
+    "uuid": "^8.3.2",
+    "react-transition-group": "^4.4.2"
+  }
 }

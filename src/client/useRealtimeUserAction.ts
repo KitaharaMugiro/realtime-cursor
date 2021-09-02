@@ -12,7 +12,7 @@ const convertResponseToModel = (response: onCreateUserActionResponse): RealtimeU
     return { ...response, key: response.SK }
 }
 
-export default (callback?: (actionId: string, value: string) => void) => {
+export default (callback?: (actionId: string, value: string, userInfo?: { name: string, color: string, avator: string }) => void) => {
 
     /* URL取得 */
     if (typeof window === "undefined") return {
@@ -20,8 +20,8 @@ export default (callback?: (actionId: string, value: string) => void) => {
         pushUserAction: (args: any) => { },
         createdUserAction: (args: any) => { },
         userActionList: []
-
     }
+
     const host = window.location.host
     const path = window.location.pathname
     const url = host + path
@@ -51,8 +51,14 @@ export default (callback?: (actionId: string, value: string) => void) => {
         }
         const actionId = createdUserAction.actionId
         const value = createdUserAction.value
+        const userInfo = {
+            avator: createdUserAction.avator,
+            name: createdUserAction.name,
+            color: createdUserAction.color
+
+        }
         if (callback) {
-            callback(actionId, value)
+            callback(actionId, value, userInfo)
         }
     }, [_createdAction]) //createdUserActionだと無限ループになるっぽい？
 

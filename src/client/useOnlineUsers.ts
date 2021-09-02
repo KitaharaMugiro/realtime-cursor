@@ -17,7 +17,7 @@ const convertResponseToModel = (response: queryRealtimeUserResponse[0]): OnlineU
 export default () => {
 
     /* 定数 */
-    const POKE_INTERVAL_MILLISEC = 5005
+    const POKE_INTERVAL_MILLISEC = 5000
 
     /* URL取得 */
     if (typeof window === "undefined") return { loading: true, onlineUserList: [] }
@@ -68,7 +68,7 @@ export default () => {
         const newOnlineUserList = updateArray(onlineUserList, createdUser)
         const filteredModels = filteringOutByDeletetime(newOnlineUserList)
         setOnlineUserList(filteredModels)
-    }, [createdUser])
+    }, [_createdUser])
 
     return { onlineUserList }
 
