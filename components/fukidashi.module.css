@@ -11,7 +11,7 @@
     -webkit-border-radius:10px;
     -moz-border-radius:10px;
 }
-.arrow_box:after{
+.arrow_box_after{
     border: solid transparent;
     content:'';
     height:0;

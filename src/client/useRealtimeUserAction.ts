@@ -19,7 +19,7 @@ export default (callback?: (actionId: string, value: string, userInfo?: { name: 
         loading: true,
         pushUserAction: (args: any) => { },
         createdUserAction: (args: any) => { },
-        userActionList: []
+        userActionList: new Array<RealtimeUserAction>()
     }
 
     const host = window.location.host
