@@ -33,8 +33,8 @@ const Home: NextPage = () => {
 
           <Link href="/realtime-cursor-test">
             <a className={styles.card}>
-              <h2>Realtime Mouse Cursor(only for PC) &rarr;</h2>
-              <p>You can see how other people are moving the mouse</p>
+              <h2>Realtime Mouse Cursor &rarr;</h2>
+              <p>You can see how other people are moving their mouse</p>
             </a>
           </Link>
 
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
           <Link href="/user-action">
             <a className={styles.card}>
               <h2>Visible User Actions &rarr;</h2>
-              <p>A button that reacts when someone presses it</p>
+              <p>Buttons that reacts when someone presses it</p>
             </a>
           </Link>
         </div>

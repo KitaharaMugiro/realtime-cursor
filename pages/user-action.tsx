@@ -1,15 +1,11 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import React, { useState } from "react";
 import { CSSTransition } from 'react-transition-group';
 import NormalButton from '../components/NormalButton';
-//import useRealtimeUserAction from '../src/client/useRealtimeUserAction';
-import { useRealtimeUserAction } from 'realtimely';
 import RealtimeHeader from '../components/RealtimeHeader';
-// import styles from '../styles/Home.module.css';
-// import style from "./button.module.css";
-let styles = require('../styles/Home.module.css')
-let style = require("./button.module.css")
+import { useRealtimeUserAction } from '../src';
+import styles from '../styles/Home.module.css'
+import button_style from "./button.module.css"
 
 
 const Home: NextPage = () => {
@@ -43,26 +39,29 @@ const Home: NextPage = () => {
                     timeout={500}
                     onExited={() => setFire1(false)}
                     classNames={{
-                        enterActive: style.enterActive,
-                        enterDone: style.enterDone,
-                        exitActive: style.exitActive,
-                        exitDone: style.exitDone
+                        enterActive: button_style.enterActive,
+                        enterDone: button_style.enterDone,
+                        exitActive: button_style.exitActive,
+                        exitDone: button_style.exitDone
                     }}>
                     <NormalButton onClick={() => onClick("button_1")} />
                 </CSSTransition>
+
                 <div style={{ height: 10 }} />
+
                 <CSSTransition
                     in={!fire2}
                     timeout={500}
                     onExited={() => setFire2(false)}
                     classNames={{
-                        enterActive: style.enterActive,
-                        enterDone: style.enterDone,
-                        exitActive: style.exitActive,
-                        exitDone: style.exitDone
+                        enterActive: button_style.enterActive,
+                        enterDone: button_style.enterDone,
+                        exitActive: button_style.exitActive,
+                        exitDone: button_style.exitDone
                     }}>
                     <NormalButton onClick={() => onClick("button_2")} />
                 </CSSTransition>
+
                 <div style={{ height: 10 }} />
 
                 <CSSTransition
@@ -70,14 +69,13 @@ const Home: NextPage = () => {
                     timeout={500}
                     onExited={() => setFire3(false)}
                     classNames={{
-                        enterActive: style.enterActive,
-                        enterDone: style.enterDone,
-                        exitActive: style.exitActive,
-                        exitDone: style.exitDone
+                        enterActive: button_style.enterActive,
+                        enterDone: button_style.enterDone,
+                        exitActive: button_style.exitActive,
+                        exitDone: button_style.exitDone
                     }}>
                     <NormalButton onClick={() => onClick("button_3")} />
                 </CSSTransition>
-
 
             </main>
         </div>

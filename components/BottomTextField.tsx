@@ -12,7 +12,7 @@ export default (props: Props) => {
             <input
                 onChange={(e) => props.onChange(e.target.value)}
                 value={props.value}
-                className={style.textbox} type="text" name="q" placeholder="思ったことを書き込もう" autoComplete="off" maxLength={60} />
+                className={style.textbox} type="text" name="q" placeholder="Type what you think" autoComplete="off" maxLength={60} />
         </div>
     )
 }
