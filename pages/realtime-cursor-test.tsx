@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 import React from "react";
 import RealtimeHeader from '../components/RealtimeHeader';
 import { useRealtimeCursor } from '../src';
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
 
             <main className={styles.main}>
                 <h1 className={styles.title}>
-                    Welcome to <a href="https://nextjs.org">Next.js!</a>
+                    Hey! Let's talk in <Link href="/text-field"><a>Realtime Chat</a></Link>
                 </h1>
                 {renderCursors()}
             </main>

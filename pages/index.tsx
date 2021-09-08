@@ -1,11 +1,9 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/dist/client/router'
-import Head from 'next/head'
-import Image from 'next/image'
-import React from 'react'
-import styles from '../styles/Home.module.css'
 import Link from 'next/link'
+import React from 'react'
 import RealtimeHeader from '../components/RealtimeHeader'
+import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -20,7 +18,10 @@ const Home: NextPage = () => {
         </h1>
 
         <p className={styles.description}>
-          <code className={styles.code}>Get started by choosing appealing one below.</code>
+          <code className={styles.code}>npm install realtimely</code>
+          <br />
+          source code: <a href="https://github.com/KitaharaMugiro/realtime-cursor">Github</a>
+
         </p>
 
         <div className={styles.grid}>
