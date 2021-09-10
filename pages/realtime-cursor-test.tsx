@@ -17,12 +17,12 @@ const Home: NextPage = () => {
     return (
         <div className={styles.container} onMouseMove={onMouseMove}>
             <RealtimeHeader />
-
             <main className={styles.main}>
+                {renderCursors()}
                 <h1 className={styles.title}>
                     Hey! Let's talk in <Link href="/text-field"><a>Realtime Chat</a></Link>
                 </h1>
-                {renderCursors()}
+
             </main>
         </div>
     )
