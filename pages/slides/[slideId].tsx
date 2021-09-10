@@ -43,9 +43,14 @@ const Page = () => {
     const { onMouseMove, renderCursors } = useRealtimeCursor()
 
     //画像Path
-    let picturePath = "/slides/" + slideId + "/スライド" + slideState.picNumber + ".png"
+    // let picturePath = "/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".png"
+    // if (slideState.picNumber == 4) {
+    //     picturePath = "/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".gif"
+    // }
+    //なぜかCloudFrontはディレクトリを切ると404になるので。。
+    let picturePath = "/スライド" + slideState.picNumber + ".png"
     if (slideState.picNumber == 4) {
-        picturePath = "/slides/" + slideId + "/スライド" + slideState.picNumber + ".gif"
+        picturePath = "/スライド" + slideState.picNumber + ".gif"
     }
     const pictureUrl = "url(" + picturePath + ")"
 

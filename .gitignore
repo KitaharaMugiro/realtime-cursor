@@ -1,5 +1,5 @@
 # private asset
-public/slides/
+# public/slides/
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 src/dist
