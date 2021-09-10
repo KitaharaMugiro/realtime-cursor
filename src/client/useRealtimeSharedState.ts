@@ -1,5 +1,7 @@
 
 import { useEffect, useState } from "react";
+import getRealtimeSharedStateGql from "../api/gql/getRealtimeSharedStateGql";
+import { getRealtimeSharedState } from "../api/gqlFunctions/getRealtimeSharedState";
 import useCreateRealtimeSharedState from "../api/gqlFunctions/useCreateRealtimeSharedState";
 import useOnCreateRealtimeSharedState from "../api/gqlFunctions/useOnCreateRealtimeSharedState";
 
@@ -28,16 +30,27 @@ export default <T>(defaultValue: T, actionId: string): [T, (value: T) => void] =
         createRealtimeSharedState(url, actionId, JSON.stringify(value))
     }
 
+    /* 初期データの取得 */
+    useEffect(() => {
+        const getInitialSharedState = async () => {
+            const initialSharedState = await getRealtimeSharedState(url, actionId)
+            const _actionId = initialSharedState.actionId
+            if (_actionId !== actionId) return
+            const _value = JSON.parse(initialSharedState.value) as T
+            setValue(_value)
+        }
+
+        getInitialSharedState()
+    }, [])
+
+
     /* callbackの実行 */
     useEffect(() => {
-        console.log("action created")
         if (!createdRealtimeSharedState) {
             return
         }
-        console.log("action is created")
         const _actionId = createdRealtimeSharedState.actionId
         if (_actionId !== actionId) return
-        console.log("action id match")
         const _value = JSON.parse(createdRealtimeSharedState.value) as T
         setValue(_value)
     }, [createdRealtimeSharedState])
