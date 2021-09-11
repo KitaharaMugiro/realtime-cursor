@@ -20,8 +20,8 @@ const Home: NextPage = () => {
         <p className={styles.description}>
           <code className={styles.code}>npm install realtimely</code>
           <br />
-          source code: <a href="https://github.com/KitaharaMugiro/realtime-cursor">Github</a>
-
+          <a href="https://kitaharamugiro.github.io/Realtimely/">Documents</a><br />
+          <a href="https://github.com/KitaharaMugiro/realtime-cursor">Source code</a>
         </p>
 
         <div className={styles.grid}>

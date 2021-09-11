@@ -29,6 +29,11 @@ const Page = () => {
         setSlideState(slideState)
     }
 
+    const goStart = () => {
+        slideState.picNumber = 0
+        setSlideState(slideState)
+    }
+
     const toggleCursor = () => {
         slideState.enableCursor = !slideState.enableCursor
         setSlideState(slideState)
@@ -43,15 +48,11 @@ const Page = () => {
     const { onMouseMove, renderCursors } = useRealtimeCursor()
 
     //画像Path
-    // let picturePath = "/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".png"
-    // if (slideState.picNumber == 4) {
-    //     picturePath = "/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".gif"
-    // }
-    //なぜかCloudFrontはディレクトリを切ると404になるので。。
-    let picturePath = "/スライド" + slideState.picNumber + ".png"
-    if (slideState.picNumber == 4) {
-        picturePath = "/スライド" + slideState.picNumber + ".gif"
+    let picturePath = "static/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".png"
+    if (slideState.picNumber == 6) {
+        picturePath = "static/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".gif"
     }
+
     const pictureUrl = "url(" + picturePath + ")"
 
     //スライドサイズは16:9, 4:3から選ぶ
@@ -64,6 +65,7 @@ const Page = () => {
         <div className={style.main}>
             {/* Adminコントロール */}
             {admin ? <div>
+                <button onClick={goStart}>最初に戻る</button>
                 <button onClick={goPrevious}>前へ</button>
                 <button onClick={goNext}>次へ</button>
                 <button onClick={toggleCursor}>カーソル {slideState.enableCursor ? "OFF" : "ON"}</button>
