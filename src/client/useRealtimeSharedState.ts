@@ -9,7 +9,7 @@ import useOnCreateRealtimeSharedState from "../api/gqlFunctions/useOnCreateRealt
 export default <T>(defaultValue: T, actionId: string): [T, (value: T) => void] => {
 
     /* URL取得 */
-    if (typeof window === "undefined") return [undefined, undefined]
+    if (typeof window === "undefined") return [defaultValue, (value: T) => null]
 
 
     const host = window.location.host

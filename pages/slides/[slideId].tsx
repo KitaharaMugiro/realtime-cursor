@@ -17,7 +17,6 @@ const Page = () => {
         enableCursor: false,
         enableChat: false
     }, "slideState")
-    if (!slideState) return <div >loading</div>
 
     const goNext = () => {
         slideState.picNumber += 1
@@ -30,7 +29,7 @@ const Page = () => {
     }
 
     const goStart = () => {
-        slideState.picNumber = 0
+        slideState.picNumber = 1
         setSlideState(slideState)
     }
 
@@ -48,9 +47,9 @@ const Page = () => {
     const { onMouseMove, renderCursors } = useRealtimeCursor()
 
     //画像Path
-    let picturePath = "static/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".png"
+    let picturePath = "/static/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".png"
     if (slideState.picNumber == 6) {
-        picturePath = "static/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".gif"
+        picturePath = "/static/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".gif"
     }
 
     const pictureUrl = "url(" + picturePath + ")"
