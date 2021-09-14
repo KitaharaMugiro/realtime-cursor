@@ -47,9 +47,9 @@ const Page = () => {
     const { onMouseMove, renderCursors } = useRealtimeCursor()
 
     //画像Path
-    let picturePath = "/static/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".png"
+    let picturePath = "/static/slides_pic/" + slideId + "/slide" + slideState.picNumber + ".png"
     if (slideState.picNumber == 6) {
-        picturePath = "/static/slides_pic/" + slideId + "/スライド" + slideState.picNumber + ".gif"
+        picturePath = "/static/slides_pic/" + slideId + "/slide" + slideState.picNumber + ".gif"
     }
 
     const pictureUrl = "url(" + picturePath + ")"

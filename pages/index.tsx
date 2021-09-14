@@ -53,7 +53,7 @@ const Home: NextPage = () => {
             </a>
           </Link>
 
-          <Link href="/slides/sample">
+          <Link href="/slides/sample?admin=true">
             <a className={styles.card}>
               <h2>Slide Share &rarr;</h2>
               <p>You can create a slide sharing site by combining samples</p>
