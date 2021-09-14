@@ -64,11 +64,11 @@ const Page = () => {
         <div className={style.main}>
             {/* Adminコントロール */}
             {admin ? <div>
-                <button onClick={goStart}>最初に戻る</button>
-                <button onClick={goPrevious}>前へ</button>
-                <button onClick={goNext}>次へ</button>
-                <button onClick={toggleCursor}>カーソル {slideState.enableCursor ? "OFF" : "ON"}</button>
-                <button onClick={toggleChat}>チャット {slideState.enableChat ? "OFF" : "ON"}</button>
+                <button onClick={goStart}>Back to beginning</button>
+                <button onClick={goPrevious}>Previous</button>
+                <button onClick={goNext}>Next</button>
+                <button onClick={toggleCursor}>{slideState.enableCursor ? "Disable" : "Enable"} Cursor</button>
+                <button onClick={toggleChat}>{slideState.enableChat ? "Disable" : "Enable"} Chat</button>
             </div> : <div />}
 
             {/* スライド */}
