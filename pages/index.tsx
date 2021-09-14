@@ -52,6 +52,13 @@ const Home: NextPage = () => {
               <p>Buttons that reacts when someone presses it</p>
             </a>
           </Link>
+
+          <Link href="/slides/sample">
+            <a className={styles.card}>
+              <h2>Slide Share &rarr;</h2>
+              <p>You can create a slide sharing site by combining samples</p>
+            </a>
+          </Link>
         </div>
       </main>
     </div>
