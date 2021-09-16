@@ -34,6 +34,7 @@ const MiniChat = () => {
 
     const renderChats = () => {
         return userActionList.map(c => {
+            if (c.actionId !== "text") return <div key={c.key} />
             if (!c.value) return <div key={c.key} />
             return (
                 <MiniFukidashi

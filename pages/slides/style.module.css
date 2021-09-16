@@ -27,3 +27,20 @@
     background-repeat: no-repeat;
     margin: 0 auto;
 }
+
+
+.enterActive {
+    transform:scale(1)
+  }
+  
+  .enterDone {
+    transform:scale(1)
+  }
+  
+  .exitActive {
+    transform:scale(0.9)
+  }
+  
+  .exitDone {
+    transform:scale(1)
+  }
