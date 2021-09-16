@@ -19,8 +19,12 @@ const Page = () => {
         picNumber: 1,
         enableCursor: false,
         enableChat: false,
-        clicked: 0
+        enableButtons: false
     }, "slideState")
+    const [clickState, setClickState] = useRealtimeSharedState({
+        nice: 0,
+        what: 0
+    }, "clickState")
 
     const goNext = () => {
         slideState.picNumber += 1
@@ -47,6 +51,11 @@ const Page = () => {
         setSlideState(slideState)
     }
 
+    const toggleButtons = () => {
+        slideState.enableButtons = !slideState.enableButtons
+        setSlideState(slideState)
+    }
+
     //カーソル
     const { onMouseMove, renderCursors } = useRealtimeCursor()
 
@@ -68,19 +77,30 @@ const Page = () => {
     const { pushUserAction } = useRealtimeUserAction((actionId: string, value: string) => {
         if (actionId === "button_1") {
             setFire1(true)
+        } else if (actionId === "button_2") {
+            setFire2(true)
         }
     })
+
     const [fire1, setFire1] = useState(false)
+    const [fire2, setFire2] = useState(false)
     const onClick = (actionId: string) => {
         pushUserAction(actionId, "clicked")
-        if (!slideState.clicked) slideState.clicked = 0
-        slideState.clicked += 1
-        setSlideState(slideState)
+        if (actionId === "button_1") {
+            if (!clickState.nice) clickState.nice = 0
+            clickState.nice += 1
+            setClickState(clickState)
+        } else if (actionId === "button_2") {
+            if (!clickState.what) clickState.what = 0
+            clickState.what += 1
+            setClickState(clickState)
+        }
     }
 
-    const resetNice = () => {
-        slideState.clicked = 0
-        setSlideState(slideState)
+    const resetNiceAndWhat = () => {
+        clickState.nice = 0
+        clickState.what = 0
+        setClickState(clickState)
     }
 
     return (
@@ -93,7 +113,8 @@ const Page = () => {
                 <button onClick={goNext}>Next</button>
                 <button onClick={toggleCursor}>{slideState.enableCursor ? "Disable" : "Enable"} Cursor</button>
                 <button onClick={toggleChat}>{slideState.enableChat ? "Disable" : "Enable"} Chat</button>
-                <button onClick={resetNice}>Reset nice</button>
+                <button onClick={toggleButtons}>{slideState.enableButtons ? "Disable" : "Enable"} Button</button>
+                <button onClick={resetNiceAndWhat}>Reset count</button>
 
             </div> : <RealtimeHeader />}
 
@@ -120,20 +141,36 @@ const Page = () => {
                 {slideState.enableChat ? <MiniChat /> : <div />}
             </div>
 
-            <div style={{ position: "absolute", left: 3, bottom: 3 }}>
-                <CSSTransition
-                    in={!fire1}
-                    timeout={500}
-                    onExited={() => setFire1(false)}
-                    classNames={{
-                        enterActive: style.enterActive,
-                        enterDone: style.enterDone,
-                        exitActive: style.exitActive,
-                        exitDone: style.exitDone
-                    }}>
-                    <NormalButton onClick={() => onClick("button_1")} text={"LIKE " + slideState.clicked} />
-                </CSSTransition>
-            </div>
+            {slideState.enableButtons ?
+                <div style={{ position: "absolute", left: 3, bottom: 3 }}>
+                    <CSSTransition
+                        in={!fire1}
+                        timeout={500}
+                        onExited={() => setFire1(false)}
+                        classNames={{
+                            enterActive: style.enterActive,
+                            enterDone: style.enterDone,
+                            exitActive: style.exitActive,
+                            exitDone: style.exitDone
+                        }}>
+                        <NormalButton onClick={() => onClick("button_1")} text={"LIKE " + clickState.nice} />
+                    </CSSTransition>
+                    <div style={{ height: 10 }} />
+
+                    <CSSTransition
+                        in={!fire2}
+                        timeout={500}
+                        onExited={() => setFire2(false)}
+                        classNames={{
+                            enterActive: style.enterActive,
+                            enterDone: style.enterDone,
+                            exitActive: style.exitActive,
+                            exitDone: style.exitDone
+                        }}>
+                        <NormalButton onClick={() => onClick("button_2")} text={"WHAT? " + clickState.what} />
+                    </CSSTransition>
+
+                </div> : <div />}
 
 
         </div>
