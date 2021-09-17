@@ -134,8 +134,8 @@ const Page = () => {
                 {
                     position: "absolute",
                     right: 0,
-                    top: 0,
-                    width: 250,
+                    top: 60,
+                    width: 250
                 }
             }>
                 {slideState.enableChat ? <MiniChat /> : <div />}
