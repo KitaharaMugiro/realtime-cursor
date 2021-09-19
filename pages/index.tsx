@@ -39,10 +39,10 @@ const Home: NextPage = () => {
             </a>
           </Link>
 
-          <Link href="/text-field">
+          <Link href="/realtime-shared-state">
             <a className={styles.card}>
-              <h2>Realtime Chat For Real &rarr;</h2>
-              <p>Litterary realtime chat, for real</p>
+              <h2>Realtime Shared State &rarr;</h2>
+              <p>evolutionary useState</p>
             </a>
           </Link>
 
