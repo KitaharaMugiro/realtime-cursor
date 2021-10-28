@@ -7,7 +7,7 @@ import { useRealtimeCursor } from '../src';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
-    const { onMouseMove, renderCursors } = useRealtimeCursor()
+    const { onMouseMove, renderCursors } = useRealtimeCursor(100)
 
     /**カスタムビューを設定したい場合 */
     // const customView = (param: CustomCursorViewParameter) => {
@@ -22,7 +22,6 @@ const Home: NextPage = () => {
                 <h1 className={styles.title}>
                     Hey! Let's talk in <Link href="/text-field"><a>Realtime Chat</a></Link>
                 </h1>
-
             </main>
         </div>
     )
