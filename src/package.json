@@ -1,10 +1,10 @@
 {
   "name": "realtimely",
-  "version": "3.1.0",
+  "version": "3.3.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc -d"
+    "publish": "rm -rf dist && tsc -d && yarn publish"
   },
   "babel": {
     "presets": [

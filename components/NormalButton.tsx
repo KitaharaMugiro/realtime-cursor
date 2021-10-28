@@ -1,6 +1,5 @@
-import style from "./button.module.css"
-import { CSSTransition, Transition, TransitionStatus } from 'react-transition-group';
 import React from "react";
+import style from "./button.module.css";
 
 interface Props {
     onClick: Function

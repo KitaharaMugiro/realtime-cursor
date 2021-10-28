@@ -1,7 +1,5 @@
-import type { NextPage } from 'next';
 import React, { useEffect, useState } from "react";
 import useRealtimeUserAction from '../src/client/useRealtimeUserAction';
-import styles from '../styles/Home.module.css';
 import MiniBottomTextField from './MiniBottomTextField';
 import MiniFukidashi from './MiniFukidashi';
 
